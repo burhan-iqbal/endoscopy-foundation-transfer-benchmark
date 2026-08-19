@@ -1,0 +1,30 @@
+model: dinov2_vits14
+label_frac: 0.5
+seed: 0
+model_cfg:
+  family: generic_ssl
+  backbone: dinov2_vits14
+  pretrained: true
+  train_mode: frozen_head
+  input_size: 224
+  head: linear
+training:
+  max_epochs: 50
+  early_stopping_patience: 10
+  selection_metric: val_auroc
+  optimizer: adamw
+  weight_decay: 0.01
+  lr_finetune: 0.0001
+  lr_head: 0.001
+  warmup_epochs: 2
+  batch_size: 32
+  num_workers: 4
+  use_class_weights: true
+  amp: true
+split_csv: /home/dissertation_project/data/splits/low_label_50_seed_0.csv
+run_tag: label_50
+versions:
+  torch: 2.13.0+cu126
+  torchvision: 0.28.0+cu126
+  timm: 1.0.27
+  numpy: 2.5.1

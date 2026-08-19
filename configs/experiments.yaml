@@ -1,0 +1,78 @@
+# Shared training / evaluation protocol (matches draft paper Appendix A)
+task: binary_benign_malignant
+positive_class: malignant
+
+seeds: [0, 1, 2]
+label_fractions: [0.05, 0.10, 0.25, 0.50, 1.0]
+
+image:
+  size: 224
+  vit_size: 384
+  imagenet_mean: [0.485, 0.456, 0.406]
+  imagenet_std: [0.229, 0.224, 0.225]
+
+augmentation:
+  horizontal_flip: true
+  rotation_degrees: 10
+  color_jitter:
+    brightness: 0.1
+    contrast: 0.1
+    saturation: 0.05
+    hue: 0.02
+  scale_jitter: [0.9, 1.1]
+
+training:
+  max_epochs: 50
+  early_stopping_patience: 10
+  selection_metric: val_auroc
+  optimizer: adamw
+  weight_decay: 0.01
+  lr_finetune: 1.0e-4
+  lr_head: 1.0e-3
+  warmup_epochs: 2
+  batch_size: 32
+  num_workers: 4
+  use_class_weights: true
+  amp: true
+
+models:
+  resnet50:
+    family: imagenet
+    backbone: resnet50
+    pretrained: true
+    train_mode: finetune
+    input_size: 224
+  dinov2_vits14:
+    family: generic_ssl
+    backbone: dinov2_vits14
+    pretrained: true
+    train_mode: frozen_head
+    input_size: 224
+    head: linear
+  endo_fm:
+    family: endoscopy_fm
+    backbone: endo_fm
+    pretrained: true
+    train_mode: frozen_head
+    input_size: 224
+    head: linear
+    weights_path: models/external_weights/endo_fm.pth
+
+calibration:
+  method: temperature_scaling
+  fit_on: validation
+
+bootstrap:
+  n_resamples: 1000
+  ci: 0.95
+
+paths:
+  metadata_csv: data/processed/ce_nbi_metadata.csv
+  splits_dir: data/splits
+  checkpoints_dir: models/checkpoints
+  external_weights_dir: models/external_weights
+  logs_dir: reports/logs
+  predictions_dir: reports/predictions
+  figures_dir: reports/figures
+  tables_dir: reports/tables
+  features_dir: data/processed/features

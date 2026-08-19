@@ -1,0 +1,22 @@
+# Environment
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+
+# Raw data & large external artefacts — see README "Data & weights" for download instructions
+data/raw/
+data/interim/
+models/checkpoints/*
+!models/checkpoints/.gitkeep
+models/external_weights/*
+!models/external_weights/.gitkeep
+
+# Local MPS pilot archive (6+ GB of checkpoints; superseded by the H100 runs in reports/logs/)
+reports/logs_mps_seed0_archive/
+
+# Model checkpoints & backups anywhere
+*.pt
+*.bak
+*.bak_*

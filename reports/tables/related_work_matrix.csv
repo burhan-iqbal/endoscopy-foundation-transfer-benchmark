@@ -1,0 +1,9 @@
+study,dataset_task,representation,patient_level,label_efficiency,calibration,explainability,main_limitation
+Esmaeili et al. 2023 (CE-NBI dataset),CE-NBI dataset + technical validation,Supervised CNN transfer (DenseNet/EfficientNet/ResNet/ensemble),No,No,No,Limited,Dataset paper; not an endoscopy foundation-model benchmark
+Esmaeili et al. 2021 (Deep CNN CE-NBI),CE-NBI benign/malignant,ImageNet ResNet-50 with cut-off strategy,No,No,No,No,Conventional ImageNet transfer only
+Fang et al. 2025 (two-step heterogeneous TL),CE-NBI benign/malignant,Two-step heterogeneous TL via diabetic-retinopathy intermediate domain,No (7:2:1 image split),No,No,LayerCAM / class activation maps,Closest competitor; no endoscopy FM comparison; no label-efficiency or calibration
+Kang et al. 2024 (ILCDS),Laryngoscopy cancer classification,Swin / self-attention,Partial,No,No,Attention maps,Not CE-NBI; not foundation-model transfer benchmark
+DINOv2 oropharyngeal PoC 2024,Oropharyngeal NBI (adjacent ENT),Generic DINOv2 + SVM,No,No,No,No,Adjacent anatomy; generic SSL only; small patch set
+Wang et al. 2023 (Endo-FM),GI endoscopy video foundation model,Endoscopy-domain video SSL (Endo-FM),N/A (source model),N/A,N/A,N/A,GI-focused; not validated on laryngeal CE-NBI
+Dermyer et al. 2025 (EndoDINO),GI endoscopy foundation model,Endoscopy-domain DINOv2-style (EndoDINO),N/A (source model),N/A,N/A,N/A,GI-focused; candidate encoder for this benchmark
+This benchmark,Public CE-NBI benign/malignant,ImageNet vs generic SSL vs endoscopy FM,Yes,Yes (5-100% labelled patients),Yes (Brier/ECE + temperature scaling),Grad-CAM / attention,Single public dataset; GI-to-larynx domain gap risk

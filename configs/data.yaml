@@ -1,0 +1,27 @@
+# CE-NBI data paths and split settings (relative to dissertation_project/)
+dataset_name: ce_nbi
+zenodo_url: "https://zenodo.org/records/6674034/files/Larynx_CE-NBI_Dataset.zip?download=1"
+zenodo_md5: "17425958e554782ee2ccbaa066b44258"
+expected_n_images: 11144
+expected_n_patients: 210
+
+paths:
+  raw_dir: data/raw
+  raw_zip: data/raw/Larynx_CE-NBI_Dataset.zip
+  interim_dir: data/interim/ce_nbi
+  metadata_csv: data/processed/ce_nbi_metadata.csv
+  splits_dir: data/splits
+  figures_dir: reports/figures
+  audit_report: reports/data_audit.md
+
+split:
+  train_frac: 0.70
+  val_frac: 0.15
+  test_frac: 0.15
+  seeds: [0, 1, 2]
+  label_fractions: [0.05, 0.10, 0.25, 0.50, 1.0]
+  stratify_by: binary_label
+
+image:
+  size: 224
+  vit_size: 384
